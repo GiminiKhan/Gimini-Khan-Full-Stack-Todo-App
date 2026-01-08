@@ -1,14 +1,15 @@
+import sys
+import os
 from fastapi import FastAPI
+
+# Vercel fix: Ye lines project root ko Python path mein add karti hain
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+# Ab hum absolute imports use kar sakte hain
 from src.backend.core.config import settings
 from src.backend.api.routes.auth import router as auth_router
 from src.backend.api.routes.projects import router as projects_router
 from src.backend.api.routes.todos import router as todos_router
-# from fastapi import FastAPI
-# from .core.config import settings
-# from .api.routes.auth import router as auth_router
-# from .api.routes.projects import router as projects_router
-# from .api.routes.todos import router as todos_router
-
 
 def create_app():
     app = FastAPI(
@@ -33,6 +34,5 @@ def create_app():
         return {"status": "healthy", "database_url": settings.database_url}
 
     return app
-
 
 app = create_app()
