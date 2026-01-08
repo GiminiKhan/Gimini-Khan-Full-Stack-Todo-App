@@ -1,14 +1,15 @@
 {
-  "rewriteConfigs": true,
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "src/backend/main.py"
+      "src": "src/backend/main.py",
+      "use": "@vercel/python"
     }
   ],
-  "functions": {
-    "src/backend/main.py": {
-      "runtime": "vercel-python@0.1.0"
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/backend/main.py"
     }
-  }
+  ]
 }
