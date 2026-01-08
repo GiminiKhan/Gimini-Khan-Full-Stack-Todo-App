@@ -1,8 +1,13 @@
 from fastapi import FastAPI
-from .core.config import settings
-from .api.routes.auth import router as auth_router
-from .api.routes.projects import router as projects_router
-from .api.routes.todos import router as todos_router
+from src.backend.core.config import settings
+from src.backend.api.routes.auth import router as auth_router
+from src.backend.api.routes.projects import router as projects_router
+from src.backend.api.routes.todos import router as todos_router
+# from fastapi import FastAPI
+# from .core.config import settings
+# from .api.routes.auth import router as auth_router
+# from .api.routes.projects import router as projects_router
+# from .api.routes.todos import router as todos_router
 
 
 def create_app():
