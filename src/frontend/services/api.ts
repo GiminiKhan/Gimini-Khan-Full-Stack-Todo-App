@@ -12,7 +12,7 @@ const apiClient = axios.create({
 
 // Request interceptor to add Better Auth token if available
 apiClient.interceptors.request.use(
-  async (config) => {
+  (config) => {
     // For Better Auth, we'll need to get the session token differently
     // This is a simplified approach - in a real app, you might need to use
     // Better Auth's session management to get the current token
@@ -20,7 +20,7 @@ apiClient.interceptors.request.use(
       // Attempt to get Better Auth session token
       // Note: Better Auth typically handles this automatically with cookies
       // For API calls that need the token in headers, we might need to get it from the session
-      const token = localStorage.getItem('better-auth.session_token');
+      const token = typeof window !== 'undefined' ? localStorage.getItem('better-auth.session_token') : null;
       if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
       }

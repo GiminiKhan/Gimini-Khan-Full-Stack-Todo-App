@@ -5,7 +5,7 @@ interface User {
   email: string;
   name?: string;
   emailVerified: boolean;
-  image?: string;
+  image?: string | null;
 }
 
 // Better Auth wrapper functions
@@ -19,11 +19,16 @@ export const betterRegisterUser = async (userData: {
     const response = await signIn.email({
       email: userData.email,
       password: userData.password,
-      name: userData.name,
-      redirectTo: '/dashboard', // Redirect after successful signup
+      callbackURL: '/dashboard', // Redirect after successful signup
     });
 
-    return response.user;
+    return response.data?.user || {
+      id: '',
+      email: '',
+      name: '',
+      emailVerified: false,
+      image: undefined
+    };
   } catch (error) {
     console.error('Better Auth registration error:', error);
     throw error;
@@ -39,12 +44,18 @@ export const betterLoginUser = async (credentials: {
     const response = await signIn.email({
       email: credentials.email,
       password: credentials.password,
-      redirectTo: '/dashboard', // Redirect after successful login
+      callbackURL: '/dashboard', // Redirect after successful login
     });
 
     return {
-      user: response.user,
-      token: response.token || '', // Better Auth handles sessions automatically
+      user: response.data?.user || {
+        id: '',
+        email: '',
+        name: '',
+        emailVerified: false,
+        image: undefined
+      },
+      token: response.data?.token || '', // Better Auth handles sessions automatically
     };
   } catch (error) {
     console.error('Better Auth login error:', error);
@@ -72,9 +83,7 @@ export const betterCheckAuthStatus = async (): Promise<User | null> => {
 
 export const betterLogoutUser = async (): Promise<void> => {
   try {
-    await signOut({
-      callbackURL: '/login', // Redirect after logout
-    });
+    await signOut(); // Better Auth handles logout
   } catch (error) {
     console.error('Better Auth logout error:', error);
     throw error;
@@ -86,7 +95,7 @@ export const signInWithGoogle = async (): Promise<void> => {
   try {
     await signIn.social({
       provider: 'google',
-      redirectTo: '/dashboard',
+      callbackURL: '/dashboard',
     });
   } catch (error) {
     console.error('Google sign-in error:', error);
@@ -98,7 +107,7 @@ export const signInWithGitHub = async (): Promise<void> => {
   try {
     await signIn.social({
       provider: 'github',
-      redirectTo: '/dashboard',
+      callbackURL: '/dashboard',
     });
   } catch (error) {
     console.error('GitHub sign-in error:', error);

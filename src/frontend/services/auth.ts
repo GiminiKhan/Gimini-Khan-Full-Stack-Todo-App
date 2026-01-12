@@ -4,6 +4,8 @@ interface User {
   id: string;
   email: string;
   full_name?: string;
+  emailVerified?: boolean;
+  image?: string | null;
   is_active: boolean;
 }
 
@@ -31,7 +33,6 @@ export const registerUser = async (userData: RegisterData): Promise<User> => {
     const response = await signIn.email({
       email: userData.email,
       password: userData.password,
-      name: userData.full_name,
       callbackURL: '/dashboard', // Redirect after successful signup
     });
 
@@ -39,9 +40,9 @@ export const registerUser = async (userData: RegisterData): Promise<User> => {
 
     // Return a user object compatible with our interface
     return {
-      id: response.user.id,
-      email: response.user.email,
-      full_name: response.user.name,
+      id: response.data?.user?.id || '',
+      email: response.data?.user?.email || '',
+      full_name: response.data?.user?.name,
       is_active: true,
     };
   } catch (error) {
@@ -66,7 +67,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
     // For compatibility with existing code, return a token-like response
     // In Better Auth, the session is typically handled via cookies
     return {
-      access_token: response.token || 'better_auth_session', // Better Auth handles sessions automatically
+      access_token: response.data?.token || 'better_auth_session', // Better Auth handles sessions automatically
       token_type: 'bearer',
     };
   } catch (error) {
@@ -108,9 +109,7 @@ export const checkAuthStatus = async (): Promise<User | null> => {
 // Logout user using Better Auth
 export const logoutUser = async (): Promise<void> => {
   try {
-    await signOut({
-      callbackURL: '/login', // Redirect after logout
-    });
+    await signOut(); // Better Auth handles logout
   } catch (error) {
     console.error('Better Auth logout error:', error);
     throw error;
