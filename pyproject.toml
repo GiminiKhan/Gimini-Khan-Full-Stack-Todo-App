@@ -1,0 +1,47 @@
+[project]
+name = "console-task-app"
+version = "0.1.0"
+description = "A console-based task management application"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "asyncpg>=0.31.0",
+    "bcrypt==4.0.1",
+    "fastapi[standard]>=0.128.0",
+    "psycopg2-binary>=2.9.11",
+    "psycopg[binary]>=3.3.2",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "C", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.uv.workspace]
+members = [
+    "src/backend",
+]
+
+[dependency-groups]
+dev = [
+    "alembic>=1.17.2",
+]
