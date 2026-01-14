@@ -3,12 +3,8 @@ from sqlmodel import create_engine
 from sqlalchemy.pool import QueuePool
 from ..core.config import settings
 import os
-from dotenv import load_dotenv
 from urllib.parse import urlparse, parse_qs, urlencode
 
-# Load environment variables from .env file - use absolute path to ensure it's found
-env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), '.env')
-load_dotenv(env_path)
 
 
 def get_engine():
@@ -60,7 +56,7 @@ def get_engine():
     # Create the engine with the URL (without sslmode) and connect_args for SSL
     return create_engine(
         final_db_url,
-        echo=True,  # Set to True for debugging SQL queries
+        echo=settings.debug,  # Only enable SQL query logging in debug mode
         poolclass=QueuePool,
         pool_pre_ping=True,  # Verify connections before use
         pool_size=5,  # Number of connection objects to maintain

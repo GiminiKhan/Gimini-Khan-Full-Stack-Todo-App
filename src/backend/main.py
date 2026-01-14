@@ -3,10 +3,14 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-# For Vercel compatibility, we'll use relative imports
-from .core.config import settings
-from .api.routes.auth import router as auth_router
-from .api.routes.tasks import router as tasks_router  # Updated to tasks
+# Add the project root to Python path for Vercel deployment
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+# Import using absolute paths that work in Vercel
+from src.backend.core.config import settings
+from src.backend.api.routes.auth import router as auth_router
+from src.backend.api.routes.tasks import router as tasks_router  # Updated to tasks
 
 def create_app():
     app = FastAPI(
@@ -37,7 +41,7 @@ def create_app():
         Better Auth session endpoint.
         This endpoint is used by the frontend to check session status.
         """
-        from .services.better_auth_service import better_auth_service
+        from src.backend.services.better_auth_service import better_auth_service
 
         # Extract token from Authorization header
         authorization = request.headers.get("authorization")
@@ -66,7 +70,13 @@ def create_app():
 
     @app.get("/health")
     async def health_check():
-        return {"status": "healthy", "database_url": settings.database_url}
+        # Don't expose the full database URL in production for security
+        has_db_url = bool(settings.database_url or os.getenv("DATABASE_URL"))
+        return {
+            "status": "healthy",
+            "database_configured": has_db_url,
+            "debug_mode": settings.debug
+        }
 
     return app
 
