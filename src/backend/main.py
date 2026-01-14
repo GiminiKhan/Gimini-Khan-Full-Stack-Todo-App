@@ -3,13 +3,10 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-# Vercel fix: Ye lines project root ko Python path mein add karti hain
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
-
-# Ab hum absolute imports use kar sakte hain
-from src.backend.core.config import settings
-from src.backend.api.routes.auth import router as auth_router
-from src.backend.api.routes.tasks import router as tasks_router  # Updated to tasks
+# For Vercel compatibility, we'll use relative imports
+from .core.config import settings
+from .api.routes.auth import router as auth_router
+from .api.routes.tasks import router as tasks_router  # Updated to tasks
 
 def create_app():
     app = FastAPI(
@@ -40,7 +37,7 @@ def create_app():
         Better Auth session endpoint.
         This endpoint is used by the frontend to check session status.
         """
-        from src.backend.services.better_auth_service import better_auth_service
+        from .services.better_auth_service import better_auth_service
 
         # Extract token from Authorization header
         authorization = request.headers.get("authorization")
