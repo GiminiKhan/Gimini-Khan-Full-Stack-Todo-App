@@ -3,18 +3,11 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-# Properly configure Python path for Vercel serverless environment
-current_dir = os.path.dirname(os.path.abspath(__file__))
-backend_dir = os.path.dirname(current_dir)
-project_root = os.path.dirname(backend_dir)
+# Add the project root to Python path for Vercel deployment
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
 
-# Add the project root and backend directories to Python path
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-if backend_dir not in sys.path:
-    sys.path.insert(0, backend_dir)
-
-# Import using absolute paths that work in Vercel serverless environment
+# Import using absolute paths that work in Vercel
 from src.backend.core.config import settings
 from src.backend.api.routes.auth import router as auth_router
 from src.backend.api.routes.tasks import router as tasks_router  # Updated to tasks
