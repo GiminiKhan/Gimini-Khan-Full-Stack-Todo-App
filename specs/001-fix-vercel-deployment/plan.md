@@ -7,12 +7,12 @@
 
 ## Summary
 
-This plan addresses the FUNCTION_INVOCATION_FAILED error occurring during Vercel deployment. The primary requirement is to fix import path resolution, align Python runtime versions, optimize database connections for serverless environment, and resolve dependency conflicts. The technical approach involves modifying import statements to work in Vercel's serverless environment, updating runtime configuration, and optimizing initialization for cold start performance.
+This plan addresses the ModuleNotFoundError for 'pydantic_core._pydantic_core' occurring during Vercel deployment. The primary requirement is to resolve dependency conflicts between pydantic and pydantic-core versions in the requirements.txt file. The technical approach involves updating dependency versions to ensure compatibility in Vercel's serverless environment, verifying FastAPI can import successfully, and ensuring all pydantic-dependent components load without errors.
 
 ## Technical Context
 
 **Language/Version**: Python 3.13+ (as specified in pyproject.toml)
-**Primary Dependencies**: FastAPI, SQLModel, SQLAlchemy, psycopg2-binary, asyncpg
+**Primary Dependencies**: FastAPI, Pydantic, pydantic-core, pydantic-settings, SQLModel, SQLAlchemy, psycopg2-binary, asyncpg
 **Storage**: PostgreSQL (NeonDB) accessed via SQLModel/SQLAlchemy ORM
 **Testing**: pytest (as indicated in pyproject.toml configuration)
 **Target Platform**: Vercel serverless functions (Linux environment)
@@ -20,6 +20,7 @@ This plan addresses the FUNCTION_INVOCATION_FAILED error occurring during Vercel
 **Performance Goals**: Sub-second response times, handle serverless cold starts efficiently
 **Constraints**: <30 second cold start time for Vercel functions, <50MB memory usage
 **Scale/Scope**: Single tenant application, designed for serverless deployment
+**Issue**: ModuleNotFoundError for 'pydantic_core._pydantic_core' during application startup in Vercel environment
 
 ## Constitution Check
 

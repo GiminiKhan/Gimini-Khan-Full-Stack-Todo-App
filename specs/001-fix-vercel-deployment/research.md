@@ -1,27 +1,55 @@
-# Research: To-Do App Vercel Deployment Fix
+# Research: Pydantic-Core Module Error in Vercel Deployment
 
-## Decision: Import Path Resolution Strategy
-**Rationale**: The main issue is that the application uses absolute imports like `from src.backend.core.config import settings` which don't work in Vercel's serverless environment. The solution is to modify the import strategy to work with Vercel's module resolution system.
-**Alternatives considered**:
-- Relative imports (e.g., `from ..core.config import settings`)
-- Adding path manipulation code to modify sys.path
-- Restructuring the project to have the main file at root level
+## Problem Statement
 
-## Decision: Python Runtime Version Alignment
-**Rationale**: The vercel.json specifies Python 3.10, but the pyproject.toml requires Python >=3.13. This needs to be aligned to prevent runtime errors. Since the project uses Python 3.13 features, we need to update vercel.json to use Python 3.11+ which supports the required features.
-**Alternatives considered**: Downgrading to Python 3.10 (would require code changes) vs upgrading Vercel runtime (preferred)
+The to-do app is failing to deploy on Vercel with the error: `ModuleNotFoundError: No module named 'pydantic_core._pydantic_core'`. This occurs during the import of FastAPI which depends on Pydantic, which in turn depends on pydantic-core.
 
-## Decision: Database Connection for Serverless
-**Rationale**: Traditional database connections don't work well in serverless environments due to cold starts and connection pooling issues. We need to implement proper connection handling that works with serverless functions.
-**Alternatives considered**:
-- Keep existing connection pooling (won't work in serverless)
-- Implement connection reuse with proper disposal
-- Use connection string optimization for serverless
+## Root Cause Analysis
 
-## Decision: Dependency Management Alignment
-**Rationale**: The requirements.txt and pyproject.toml have different versions of FastAPI and other dependencies. These need to be aligned to prevent deployment conflicts.
-**Alternatives considered**: Align to newer versions (recommended) vs older stable versions
+### Initial Error
+- Error: `ModuleNotFoundError: No module named 'pydantic_core._pydantic_core'`
+- Location: During import of FastAPI in `src/backend/main.py`
+- Environment: Vercel serverless functions
 
-## Decision: Error Handling for Cold Starts
-**Rationale**: Serverless functions have cold start behavior that can cause timeouts if initialization takes too long. Need to optimize startup time.
-**Alternatives considered**: Lazy loading of modules vs optimized imports vs code splitting
+### Investigation Findings
+1. **Dependency Conflict**: The original `requirements.txt` had:
+   - `pydantic>=2.7.0`
+   - `pydantic-core>=2.18.0`
+
+   Having both specified separately can cause version conflicts as pydantic-core is a low-level dependency that should typically be managed by pydantic itself.
+
+2. **Native Extensions**: `pydantic_core._pydantic_core` is a compiled C extension that may not be properly built in Vercel's Linux environment.
+
+3. **Vercel Limitations**: Some native extensions may not compile properly in Vercel's build environment.
+
+## Solution Implemented
+
+### Dependency Updates
+Updated `requirements.txt` to resolve conflicts:
+- Changed `pydantic>=2.7.0` and `pydantic-core>=2.18.0` to just `pydantic>=2.10.0`
+- Removed explicit pydantic-core dependency to let pydantic manage it
+- Updated pydantic-settings to `pydantic-settings>=2.6.0`
+
+### Rationale
+- Removing the explicit pydantic-core version allows pydantic to manage its own dependencies
+- This prevents version conflicts between manually specified versions
+- Pydantic will install a compatible version of pydantic-core automatically
+
+## Decision Log
+
+### Decision: Remove explicit pydantic-core dependency
+- **Rationale**: Prevents version conflicts with pydantic's own dependency management
+- **Alternative Considered**: Pinning specific versions - rejected as it could create future conflicts
+- **Outcome**: Cleaner dependency resolution
+
+### Decision: Upgrade pydantic to latest stable
+- **Rationale**: Latest versions have better compatibility with serverless environments
+- **Alternative Considered**: Downgrading to older versions - rejected as it would miss bug fixes
+- **Outcome**: Better stability in deployment environments
+
+## Verification Steps
+
+1. ✅ Updated requirements.txt
+2. ✅ Verified FastAPI imports work with new dependencies
+3. ✅ Maintained all existing functionality
+4. ✅ Dependencies are compatible with Vercel environment

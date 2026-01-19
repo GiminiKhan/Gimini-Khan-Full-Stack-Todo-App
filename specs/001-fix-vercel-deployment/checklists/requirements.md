@@ -1,7 +1,7 @@
-# Specification Quality Checklist: To-Do App Vercel Deployment Fix
+# Specification Quality Checklist: To-Do App Vercel Deployment Pydantic-Core Fix
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
-**Created**: 2026-01-17
+**Created**: 2026-01-19
 **Feature**: specs/001-fix-vercel-deployment/spec.md
 
 ## Content Quality

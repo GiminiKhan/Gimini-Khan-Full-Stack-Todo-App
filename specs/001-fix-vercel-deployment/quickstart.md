@@ -1,26 +1,48 @@
-# Quickstart: To-Do App Vercel Deployment Fix
+# Quickstart: Pydantic-Core Fix for Vercel Deployment
+
+## Overview
+This guide explains how to deploy the to-do app to Vercel with the pydantic-core module error resolved.
 
 ## Prerequisites
-- Python 3.13+
-- Vercel CLI installed
-- Access to Neon PostgreSQL database
-- Environment variables configured
+- Node.js and npm installed
+- Vercel CLI installed (`npm install -g vercel`)
+- Python 3.13+ installed
+- Git repository initialized
 
-## Setup Process
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Configure environment variables (DATABASE_URL, BETTER_AUTH_SECRET, etc.)
-4. Update vercel.json to use Python 3.11+ runtime
-5. Deploy to Vercel: `vercel --prod`
+## Setup Instructions
 
-## Key Changes
-- Modified import paths to work in serverless environment
-- Aligned Python runtime versions across configuration files
-- Optimized database connections for serverless functions
-- Resolved dependency conflicts
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-## Verification
-1. Deploy to Vercel
-2. Verify no FUNCTION_INVOCATION_FAILED errors
-3. Test all API endpoints
-4. Confirm database operations work correctly
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Verify the fix works locally:
+   ```bash
+   # Test that FastAPI imports correctly
+   python -c "from fastapi import FastAPI; print('FastAPI import successful')"
+
+   # Test that pydantic works
+   python -c "from pydantic import BaseModel; print('Pydantic import successful')"
+   ```
+
+4. Deploy to Vercel:
+   ```bash
+   vercel --prod
+   ```
+
+## Key Changes Made
+- Updated requirements.txt to resolve pydantic/pydantic-core version conflicts
+- Removed explicit pydantic-core version to prevent dependency conflicts
+- Maintained compatibility with existing functionality
+
+## Verification Steps
+1. Check that the application deploys without ModuleNotFoundError
+2. Verify all API endpoints are working correctly
+3. Confirm database connections are functioning
+4. Test authentication and task management features
