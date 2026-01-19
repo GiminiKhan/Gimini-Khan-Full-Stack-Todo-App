@@ -1,7 +1,7 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import create_engine
 from sqlalchemy.pool import QueuePool
-from ..core.config import settings
+from src.backend.core.config import settings
 import os
 from urllib.parse import urlparse, parse_qs, urlencode
 

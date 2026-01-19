@@ -3,13 +3,13 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import directly using relative imports for Vercel serverless environment
-# Set up the Python path for Vercel deployment
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the project root to the Python path for Vercel deployment
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
 
-from .core.config import settings
-from .api.routes.auth import router as auth_router
-from .api.routes.tasks import router as tasks_router  # Updated to tasks
+from src.backend.core.config import settings
+from src.backend.api.routes.auth import router as auth_router
+from src.backend.api.routes.tasks import router as tasks_router  # Updated to tasks
 
 def create_app():
     app = FastAPI(

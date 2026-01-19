@@ -6,12 +6,12 @@ from sqlalchemy import select
 from typing import Optional
 import uuid
 
-from ...database.session import get_db_session
-from ...models.models import BetterAuthUser
-from ..schemas.user import UserCreate, UserResponse, Token, UserLogin
-from ...core.security import verify_password, get_password_hash, create_access_token
-from ...core.config import settings
-from ..deps import get_current_better_auth_user
+from src.backend.database.session import get_db_session
+from src.backend.models.models import BetterAuthUser
+from src.backend.api.schemas.user import UserCreate, UserResponse, Token, UserLogin
+from src.backend.core.security import verify_password, get_password_hash, create_access_token
+from src.backend.core.config import settings
+from src.backend.api.deps import get_current_better_auth_user
 
 router = APIRouter(tags=["Authentication"])
 

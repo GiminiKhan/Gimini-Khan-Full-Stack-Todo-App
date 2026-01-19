@@ -5,7 +5,7 @@ import bcrypt
 
 from jose import JWTError, jwt
 
-from .config import settings
+from src.backend.core.config import settings
 
 # Create JWT token
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):

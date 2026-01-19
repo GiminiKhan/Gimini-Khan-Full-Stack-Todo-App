@@ -4,7 +4,7 @@ Service to handle Better Auth integration and session verification.
 import httpx
 from typing import Optional, Dict, Any
 from jose import jwt
-from ..core.config import settings
+from src.backend.core.config import settings
 
 
 class BetterAuthService:

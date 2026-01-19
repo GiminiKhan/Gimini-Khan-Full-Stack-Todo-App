@@ -4,10 +4,10 @@ from sqlmodel import select
 from typing import List, Optional
 import uuid
 
-from ...database.session import get_db_session
-from ...models.models import Todo, BetterAuthUser, Project
-from ..schemas.todo import TodoCreate, TodoUpdate, TodoResponse  # Using existing schema
-from ..deps import get_current_better_auth_user
+from src.backend.database.session import get_db_session
+from src.backend.models.models import Todo, BetterAuthUser, Project
+from src.backend.api.schemas.todo import TodoCreate, TodoUpdate, TodoResponse  # Using existing schema
+from src.backend.api.deps import get_current_better_auth_user
 
 router = APIRouter(prefix="", tags=["Tasks"])  # Empty prefix since we'll define full paths
 

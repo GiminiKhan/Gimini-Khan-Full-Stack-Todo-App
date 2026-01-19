@@ -5,12 +5,12 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from jose import JWTError
 
-from ..database.session import get_db_session
-from ..models.models import BetterAuthUser
-from ..models.user import User
-from ..core.security import decode_access_token
-from ..core.config import settings
-from ..services.better_auth_service import better_auth_service
+from src.backend.database.session import get_db_session
+from src.backend.models.models import BetterAuthUser
+from src.backend.models.user import User
+from src.backend.core.security import decode_access_token
+from src.backend.core.config import settings
+from src.backend.services.better_auth_service import better_auth_service
 
 
 security = HTTPBearer()
