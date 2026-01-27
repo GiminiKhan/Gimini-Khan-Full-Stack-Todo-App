@@ -33,10 +33,14 @@ specs/
 │   ├── spec.md            # Console app requirements
 │   ├── plan.md            # Console app architecture
 │   └── tasks.md           # Console app task checklist
-└── phase2-web/            # Phase II: Web application
+└── 001-web-auth-todo/     # Phase II: Web authentication and todo management
     ├── spec.md           # Web app requirements
     ├── plan.md           # Web app architecture
-    └── tasks.md          # Web app task checklist
+    ├── tasks.md          # Web app task checklist
+    ├── data-model.md     # Data model definitions
+    ├── research.md       # Research findings
+    ├── quickstart.md     # Quickstart guide
+    └── checklists/       # Quality checklists
 ```
 
 ### Source Code Structure

@@ -4,7 +4,7 @@
 **Created**: [DATE]
 **Status**: Draft
 **Input**: User description: "$ARGUMENTS"
-**Constitution Compliance**: Must align with constitution principles (Spec-Driven Development, No Manual Code, Agentic Stack, Clean Architecture, Process Integrity)
+**Constitution Compliance**: Must align with constitution principles (Spec-Driven Development, No Manual Code, Agentic Stack, Clean Architecture, Process Integrity, Security Protocol, Frontend Standard, UI/UX Standards)
 
 ## User Scenarios & Testing *(mandatory)*
 

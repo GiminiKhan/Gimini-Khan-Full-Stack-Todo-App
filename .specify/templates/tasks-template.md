@@ -7,7 +7,7 @@ description: "Task list template for feature implementation"
 
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
-**Constitution Compliance**: All tasks must adhere to constitution principles (Spec-Driven Development, No Manual Code, Agentic Stack, Clean Architecture, Process Integrity)
+**Constitution Compliance**: All tasks must adhere to constitution principles (Spec-Driven Development, No Manual Code, Agentic Stack, Clean Architecture, Process Integrity, Security Protocol, Frontend Standard, UI/UX Standards)
 
 **Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
 

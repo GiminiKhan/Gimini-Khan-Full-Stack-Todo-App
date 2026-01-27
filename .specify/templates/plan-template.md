@@ -45,12 +45,24 @@
 - [ ] Agentic approach ensures automation and consistency across development lifecycle
 
 ### Clean Architecture
-- [ ] Codebase maintains modular and clean architecture principles despite in-memory storage
-- [ ] Architecture ensures maintainability, testability, and scalability
+- [ ] Codebase maintains modular and clean architecture principles using Cloud-Native Architecture (FastAPI + Neon PostgreSQL)
+- [ ] Architecture ensures maintainability, testability, scalability, and robust data persistence
 
 ### Process Integrity
 - [ ] Every code change references a Task ID before implementation
 - [ ] Traceability and accountability maintained throughout development process
+
+### Security Protocol
+- [ ] Better Auth with JWT implemented as mandatory security protocol for all authentication and authorization flows
+- [ ] Secure user access, token management, and protection of sensitive data across all application layers
+
+### Frontend Standard
+- [ ] Next.js 15+ App Router used as the standard for all frontend development
+- [ ] Modern React development practices, server-side rendering capabilities, and optimized performance ensured
+
+### UI/UX Standards
+- [ ] Modern & Attractive UI implemented using Tailwind CSS with Indigo/Slate theme
+- [ ] Consistent visual identity, responsive design, accessibility compliance, and enhanced user experience maintained
 
 ## Project Structure
 
