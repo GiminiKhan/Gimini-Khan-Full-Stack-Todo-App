@@ -1,1 +1,0 @@
-"""Core module for the To-Do App API"""
