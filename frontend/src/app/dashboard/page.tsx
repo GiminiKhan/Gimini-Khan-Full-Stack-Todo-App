@@ -219,7 +219,7 @@ export default function Dashboard() {
                     value={editTaskData.description}
                     onChange={(e) => setEditTaskData({...editTaskData, description: e.target.value})}
                     className={`w-full text-sm p-1 border-b ${task.completed ? 'line-through text-gray-400' : 'text-slate-500'}`}
-                    rows="3"
+                    rows={3}
                   />
                 </>
               ) : (
